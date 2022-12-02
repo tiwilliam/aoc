@@ -12,22 +12,17 @@ class Alternative(Enum):
     Scissors = 3
 
     @property
-    def losing_response(self) -> Self:
-        if self == self.Rock:
-            return self.Paper
-        if self == self.Paper:
-            return self.Scissors
-        if self == self.Scissors:
-            return self.Rock
+    def lose_against(self) -> Self:
+        return Alternative((self.value % 3) + 1)
 
     @property
-    def winning_response(self) -> Self:
-        return (set(Alternative) - {self, self.losing_response}).pop()
+    def wins_over(self) -> Self:
+        return Alternative((self.value - 2) % 3 + 1)
 
     def __gt__(self, other):
         if self == other:
             return False
-        return self.losing_response != other
+        return self.lose_against != other
 
 
 class OpponentAlternatives(Enum):
@@ -55,10 +50,10 @@ class MyOutcome(Enum):
 
     def best_choice(self, other: Alternative) -> Alternative:
         if self.value == Outcome.Lose:
-            return other.winning_response
+            return other.wins_over
         if self.value == Outcome.Draw:
             return other
-        return other.losing_response
+        return other.lose_against
 
 
 def part_one(points=0):
