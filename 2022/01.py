@@ -3,9 +3,8 @@ from helper import load_input
 cals = []
 input = load_input("01").split("\n\n")
 
-for index, user in enumerate(input):
-    total_cals = sum(map(int, user.split("\n")))
-    cals.append(total_cals)
+for user in input:
+    cals.append(sum(map(int, user.split("\n"))))
 
 cals.sort()
 
