@@ -1,7 +1,9 @@
+from typing import Self
 from enum import Enum
 from helper import load_input
 
 input = load_input("02")
+rounds = [x.split(" ") for x in input.split("\n")]
 
 
 class Alternative(Enum):
@@ -9,15 +11,23 @@ class Alternative(Enum):
     Paper = 2
     Scissors = 3
 
+    @property
+    def losing_response(self) -> Self:
+        if self == self.Rock:
+            return self.Paper
+        if self == self.Paper:
+            return self.Scissors
+        if self == self.Scissors:
+            return self.Rock
+
+    @property
+    def winning_response(self) -> Self:
+        return (set(Alternative) - {self, self.losing_response}).pop()
+
     def __gt__(self, other):
         if self == other:
             return False
-        if self == self.Rock:
-            return other == self.Scissors
-        if self == self.Paper:
-            return other == self.Rock
-        if self == self.Scissors:
-            return other == self.Paper
+        return self.losing_response != other
 
 
 class OpponentAlternatives(Enum):
@@ -45,52 +55,36 @@ class MyOutcome(Enum):
 
     def best_choice(self, other: Alternative) -> Alternative:
         if self.value == Outcome.Lose:
-            return lose_map[other]
+            return other.winning_response
         if self.value == Outcome.Draw:
             return other
-        return win_map[other]
+        return other.losing_response
 
 
-lose_map = {
-    Alternative.Rock: Alternative.Scissors,
-    Alternative.Paper: Alternative.Rock,
-    Alternative.Scissors: Alternative.Paper,
-}
-
-win_map = dict(zip(lose_map.values(), lose_map.keys()))
-
-rounds = input.split("\n")
-
-
-def part_one():
-    my_points = 0
-    for round in rounds:
-        op_alternative, my_alternative = round.split(" ")
+def part_one(points=0):
+    for op_alternative, my_alternative in rounds:
         op_enum = OpponentAlternatives[op_alternative]
         my_enum = MyAlternatives[my_alternative]
 
-        my_points += my_enum.value.value
-
+        points += my_enum.value.value
         if op_enum.value == my_enum.value:
-            my_points += 3
+            points += Outcome.Draw.value
         elif op_enum.value < my_enum.value:
-            my_points += 6
+            points += Outcome.Win.value
 
-    print("My points part 1:", my_points)
+    return points
 
 
-def part_two():
-    my_points = 0
-    for round in rounds:
-        op_alternative, my_outcome = round.split(" ")
+def part_two(points=0):
+    for op_alternative, my_outcome in rounds:
         op_enum = OpponentAlternatives[op_alternative]
         my_enum = MyOutcome[my_outcome]
 
-        my_points += my_enum.best_choice(op_enum.value).value
-        my_points += my_enum.value.value
+        points += my_enum.best_choice(op_enum.value).value
+        points += my_enum.value.value
 
-    print("My points part 2:", my_points)
+    return points
 
 
-part_one()
-part_two()
+print("My points part 1:", part_one())
+print("My points part 2:", part_two())
