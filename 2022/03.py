@@ -25,4 +25,4 @@ def part_two(priorities=0, batch_size=3):
 
 
 print("Sum of priorities, part 1:", part_one())
-print("Sum of priorties, part 2:", part_two())
+print("Sum of priorities, part 2:", part_two())
