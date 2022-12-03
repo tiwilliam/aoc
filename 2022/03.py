@@ -14,7 +14,8 @@ def batch(lines: list[str], size: int = 3):
 
 
 def split_in_half(line: str):
-    return line[: len(line) // 2], line[len(line) // 2 :]
+    i = len(line) // 2
+    return line[:i], line[i:]
 
 
 def part_one(prio: int = 0):
