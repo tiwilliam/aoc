@@ -1,5 +1,6 @@
-from typing import Self
+from __future__ import annotations
 from enum import Enum
+
 from helper import load_input
 
 input = load_input("02")
@@ -12,14 +13,14 @@ class Alternative(Enum):
     Scissors = 3
 
     @property
-    def lose_against(self) -> Self:
+    def lose_against(self):
         return Alternative((self.value % 3) + 1)
 
     @property
-    def wins_over(self) -> Self:
+    def wins_over(self):
         return Alternative((self.value - 2) % 3 + 1)
 
-    def __gt__(self, other):
+    def __gt__(self, other: Alternative):
         if self == other:
             return False
         return self.lose_against != other
@@ -48,7 +49,7 @@ class MyOutcome(Enum):
     Y = Outcome.Draw
     Z = Outcome.Win
 
-    def best_choice(self, other: Alternative) -> Alternative:
+    def best_choice(self, other: Alternative):
         if self.value == Outcome.Lose:
             return other.wins_over
         if self.value == Outcome.Draw:
@@ -56,7 +57,7 @@ class MyOutcome(Enum):
         return other.lose_against
 
 
-def part_one(points=0):
+def part_one(points: int = 0):
     for op_alternative, my_alternative in rounds:
         op_enum = OpponentAlternatives[op_alternative]
         my_enum = MyAlternatives[my_alternative]
@@ -70,7 +71,7 @@ def part_one(points=0):
     return points
 
 
-def part_two(points=0):
+def part_two(points: int = 0):
     for op_alternative, my_outcome in rounds:
         op_enum = OpponentAlternatives[op_alternative]
         my_enum = MyOutcome[my_outcome]

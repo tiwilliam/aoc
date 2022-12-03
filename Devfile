@@ -5,3 +5,4 @@ up:
     - pip:
           - black
           - ruff
+          - pyre-check
