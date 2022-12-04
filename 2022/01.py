@@ -2,7 +2,6 @@ from helper import load_input
 
 input = load_input("01", split="\n\n")
 
-
 sorted_cals = [sum(map(int, user.split("\n"))) for user in input]
 sorted_cals.sort()
 
