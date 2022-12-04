@@ -32,5 +32,5 @@ def part_two(prio: int = 0):
     return prio
 
 
-print("Sum of priorities, part 1:", part_one())
-print("Sum of priorities, part 2:", part_two())
+print("Part one:", part_one())
+print("Part two:", part_two())

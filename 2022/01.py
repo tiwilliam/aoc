@@ -1,15 +1,19 @@
 from helper import load_input
 
-
-def sort_by_cals():
-    input = load_input("01", split="\n\n")
-    cals = [sum(map(int, user.split("\n"))) for user in input]
-    cals.sort()
-    return cals
+input = load_input("01", split="\n\n")
 
 
-sorted_cals = sort_by_cals()
+sorted_cals = [sum(map(int, user.split("\n"))) for user in input]
+sorted_cals.sort()
 
 
-print("User with most cals:", sorted_cals[-1])
-print("Top 3 users with most cals:", sum(sorted_cals[-3:]))
+def part_one():
+    return sorted_cals[-1]
+
+
+def part_two():
+    return sum(sorted_cals[-3:])
+
+
+print("Part one:", part_one())
+print("Part two:", part_two())

@@ -100,5 +100,5 @@ def part_two(points: int = 0):
     return points
 
 
-print("My points part 1:", part_one())
-print("My points part 2:", part_two())
+print("Part one:", part_one())
+print("Part two:", part_two())

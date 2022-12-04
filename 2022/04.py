@@ -35,5 +35,5 @@ def part_two(score: int = 0):
     return score
 
 
-print("In how many does one range fully contain the other?", part_one())
-print("In how many do the ranges overlap?", part_two())
+print("Part one:", part_one())
+print("Part two:", part_two())
