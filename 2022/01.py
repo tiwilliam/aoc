@@ -2,7 +2,7 @@ from helper import load_input
 
 
 def sort_by_cals():
-    input = load_input("01").split("\n\n")
+    input = load_input("01", split="\n\n")
     cals = [sum(map(int, user.split("\n"))) for user in input]
     cals.sort()
     return cals

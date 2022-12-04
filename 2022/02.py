@@ -3,8 +3,8 @@ from enum import Enum
 
 from helper import load_input
 
-input = load_input("02")
-rounds = [x.split(" ") for x in input.split("\n")]
+lines = load_input("02")
+rounds = [x.split(" ") for x in lines]
 
 
 class Alternative(Enum):

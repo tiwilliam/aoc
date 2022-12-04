@@ -1,7 +1,6 @@
 from helper import load_input
 
-input = load_input("03")
-lines = input.split("\n")
+lines = load_input("03")
 
 
 def score(letter: str):
