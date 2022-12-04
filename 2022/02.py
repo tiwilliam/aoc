@@ -14,13 +14,28 @@ class Alternative(Enum):
 
     @property
     def lose_against(self):
+        """
+        Get the alternative that this alternative loses against.
+
+        >>> Alternative.Rock.lose_against
+        Alternative.Paper
+        """
         return Alternative((self.value % 3) + 1)
 
     @property
     def wins_over(self):
+        """
+        Get the alternative that this alternative wins over.
+
+        >>> Alternative.Rock.wins_over
+        Alternative.Scissors
+        """
         return Alternative((self.value - 2) % 3 + 1)
 
     def __gt__(self, other: Alternative):
+        """
+        Check if this alternative wins over the other alternative.
+        """
         if self == other:
             return False
         return self.lose_against != other
@@ -50,6 +65,9 @@ class MyOutcome(Enum):
     Z = Outcome.Win
 
     def best_choice(self, other: Alternative):
+        """
+        Get the alternative to achive outcome, given the other alternative.
+        """
         if self.value == Outcome.Lose:
             return other.wins_over
         if self.value == Outcome.Draw:
