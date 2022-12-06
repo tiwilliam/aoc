@@ -5,9 +5,7 @@ input = load_input("06", split=None)
 
 
 class LifoQueue(queue.Queue):
-    def __init__(self, maxsize=0):
-        super().__init__(maxsize)
-        self.total_items = 0
+    total_items = 0
 
     def put(self, item):
         if len(self.queue) >= self.maxsize:
