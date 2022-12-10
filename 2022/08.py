@@ -1,4 +1,3 @@
-from __future__ import annotations
 import itertools
 from helper import load_input
 
@@ -15,7 +14,7 @@ def grid_iterator():
 def has_clear_view(distance, direction, height, x, y):
     visible = True
     for i in range(1, distance):
-        match direction:
+        match direction:  # noqa: E999
             case "east":
                 h = input[y][x + i]
             case "west":
