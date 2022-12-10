@@ -55,7 +55,7 @@ def part_one():
 def part_two():
     system = System()
     system.run()
-    return system.crt.show_display()
+    system.crt.show_display()
 
 
 print("Part one:", part_one())
