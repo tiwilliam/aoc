@@ -44,12 +44,11 @@ class System:
             else:
                 self.tick()
 
-        return self.signal_strength
-
 
 def part_one():
     system = System()
-    return system.run()
+    system.run()
+    return system.signal_strength
 
 
 def part_two():
