@@ -34,36 +34,38 @@ def find_cord(char: str):
 
 def find_next_possible_steps(cord: tuple[int, int]):
     x, y = cord
-    possible_steps = []
+    possible_steps = set()
     next_values = next_step_map[mem_map[y][x]]
 
     if y != 0 and mem_map[y - 1][x] in next_values:
-        possible_steps.append((x, y - 1))  # up
+        possible_steps.add((x, y - 1))  # up
     if y != len(mem_map) - 1 and mem_map[y + 1][x] in next_values:
-        possible_steps.append((x, y + 1))  # down
+        possible_steps.add((x, y + 1))  # down
     if x != 0 and mem_map[y][x - 1] in next_values:
-        possible_steps.append((x - 1, y))  # left
+        possible_steps.add((x - 1, y))  # left
     if x != len(mem_map[y]) - 1 and mem_map[y][x + 1] in next_values:
-        possible_steps.append((x + 1, y))  # right
+        possible_steps.add((x + 1, y))  # right
 
     return possible_steps
 
 
 def find_quickest_path(current_cord: tuple[int, int], steps=0):
-    visited_cords = []
-    valid_cords = [current_cord]
+    visited_cords = set()
+    valid_cords = {current_cord}
     end_cord = find_cord("E")
 
     while end_cord not in valid_cords:
         steps += 1
         if len(valid_cords) == 0:
             raise NoGoodRouteError("We did not find a way to the end")
-        next_valid_cords = []
+        next_valid_cords = set()
         for cord in valid_cords:
             next = find_next_possible_steps(cord)
-            next = [n for n in next if n not in visited_cords]
-            visited_cords.extend(next)
-            next_valid_cords.extend(next)
+            for n in next:
+                if n in visited_cords:
+                    continue
+                visited_cords.add(n)
+                next_valid_cords.add(n)
         valid_cords = next_valid_cords
 
     return steps
@@ -83,13 +85,13 @@ def part_one():
 
 
 def part_two():
-    steps = []
+    steps = set()
     for y, row in mem_map.items():
         for x, c in row.items():
             if c != "a" or surrounded_by(x, y, "a"):
                 continue
             try:
-                steps.append(find_quickest_path((x, y)))
+                steps.add(find_quickest_path((x, y)))
             except NoGoodRouteError:
                 continue
     return min(steps)
